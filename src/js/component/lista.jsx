@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 
 const Lista = () => {
@@ -7,14 +7,64 @@ const Lista = () => {
   const [tareas, setTareas] = useState([]);
 
   useEffect(() => {
-    obtenerLista("https://assets.breatheco.de/apis/fake/todos");
+    iniciar();
   }, []);
 
-  const obtenerLista = (url) => {
-    fetch(url)
+  const obtenerLista = () => {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro")
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setTareas(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const iniciar = () => {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([]),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Lista guardada exitosamente:", data);
+        obtenerLista();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const guardarListaTareas = () => {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tareas),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Lista guardada exitosamente:", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const eliminarListaTareas = () => {
+    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro", {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Lista eliminada exitosamente:", data);
+        setTareas([]);
       })
       .catch((error) => {
         console.log(error);
@@ -31,43 +81,6 @@ const Lista = () => {
     const nuevasTareas = [...tareas];
     nuevasTareas.splice(index, 1);
     setTareas(nuevasTareas);
-  };
-
-  const guardarListaTareas = () => {
-    fetch(
-      "https://assets.breatheco.de/apis/fake/todos/user/guardarlistatarea",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(tareas),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Lista guardada exitosamente:", data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const eliminarListaTareas = () => {
-    fetch(
-      "https://assets.breatheco.de/apis/fake/todos/user/eliminarlistatarea",
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Lista eliminada exitosamente:", data);
-        setTareas([]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   return (
@@ -93,7 +106,7 @@ const Lista = () => {
               {item.label}
               <FontAwesomeIcon
                 className="float-end"
-                icon={faTrashCan}
+                icon={faTrashAlt}
                 onClick={() => eliminarTarea(index)}
               />
             </li>
