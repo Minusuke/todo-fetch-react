@@ -11,7 +11,7 @@ const Lista = () => {
   }, []);
 
   const obtenerLista = () => {
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro")
+    fetch("https://playground.4geeks.com/apis/fake/todos/titoshiro")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -23,7 +23,7 @@ const Lista = () => {
   };
 
   const iniciar = () => {
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro", {
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/titoshiro", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const Lista = () => {
   };
 
   const guardarListaTareas = () => {
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro", {
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/titoshiro", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const Lista = () => {
   };
 
   const eliminarListaTareas = () => {
-    fetch("https://assets.breatheco.de/apis/fake/todos/user/titoshiro", {
+    fetch("https://playground.4geeks.com/apis/fake/todos/user/titoshiro", {
       method: "DELETE",
     })
       .then((response) => response.json())
